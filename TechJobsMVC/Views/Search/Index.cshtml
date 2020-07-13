@@ -1,25 +1,47 @@
 ﻿<div class="container body-content">
 
-    <h1>@ViewBag.title</h1>
-
     <form action="/search/results" method="post">
         <h2>Search by:</h2>
 
-        <p>
+        <div>
             @foreach (var column in ViewBag.columns)
             {
-                <span>
-                    <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked="@column.Key == 'all'" />
-                    <label for="@column.Key">@column.Value</label>
-                </span>
+                @if (ViewBag.key == null)
+                {
+                    @if (column.Key == "all")
+                    {
+                        <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked />
+                        <label for="@column.Key">@column.Value</label>
+                    }
+                    else
+                    {
+                        <input type="radio" name="searchType" id="@column.Key" value="@column.Key" />
+                        <label for="@column.Key">@column.Value</label>
+                    }
+                }
+                else
+                {
+                    @if (column.Key == ViewBag.key)
+                    {
+                        <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked />
+                        <label for="@column.Key">@column.Value</label>
+                    }
+                    else
+                    {
+                        <input type="radio" name="searchType" id="@column.Key" value="@column.Key" />
+                        <label for="@column.Key">@column.Value</label>
+                    }
+                }
+
+
             }
 
-        </p>
+        </div>
 
-        <p>
+        <div>
             <label for="searchTerm">Keyword:</label>
             <input type="text" name="searchTerm" id="searchTerm" />
-        </p>
+        </div>
 
         <input type="submit" value="Search" />
     </form>
@@ -29,5 +51,6 @@
     @{
         //TODO #4: Loop over the search results to display all job fields.
     }
+    
 
 </div>
